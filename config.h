@@ -31,6 +31,7 @@ static const Rule rules[] = {
 	{ "Gimp",             NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
 	{ "Blueman-manager",  NULL,       NULL,       0,      	    1,           -1,        670,290,600,500,        5 },
 	{ "Nm-connection-editor",  NULL,       NULL,       0,      	    1,           -1,        670,290,600,500,        5 },
+	{ "Oblogout",  NULL,       NULL,       0,      	    1,           -1,        0,0,1905,1070,        5 },
 };
 
 /* layout(s) */
@@ -69,6 +70,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_z,      spawn,          SHCMD("firefox") },
 	{ MODKEY|ShiftMask,             XK_z,  	   spawn,	   SHCMD("alacritty -e ranger") },
+	{ MODKEY|ShiftMask,             XK_l,  	   spawn,	   SHCMD("oblogout") },
 
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },	
 
