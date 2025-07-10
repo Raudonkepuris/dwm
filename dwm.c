@@ -149,6 +149,7 @@ static void attach(Client *c);
 static void attachstack(Client *c);
 static void buttonpress(XEvent *e);
 static void checkotherwm(void);
+static void centerwindow(const Arg *arg);
 static void cleanup(void);
 static void cleanupmon(Monitor *mon);
 static void clientmessage(XEvent *e);
@@ -454,6 +455,22 @@ buttonpress(XEvent *e)
 		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
 		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
 			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+}
+
+void
+centerwindow(const Arg *arg)
+{
+  Client *c = selmon->sel;
+  if(!c)
+	 return;
+
+  if(!c->isfloating)
+	 togglefloating(NULL);
+
+  int newx = selmon->mx + (selmon->mw - c->w) / 2;
+  int newy = selmon->my + (selmon->mh - c->h) / 2;
+
+  XMoveWindow(dpy, c->win, newx, newy);
 }
 
 void

@@ -63,6 +63,8 @@ static const char *firefox[]  = { "firefox" };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,                       XK_c,      centerwindow,   {0} },
+
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,			              XK_s,		 spawn,          {.v = termcmd } },
 	{ MODKEY,			              XK_a,		 spawn,          {.v = firefox } },
