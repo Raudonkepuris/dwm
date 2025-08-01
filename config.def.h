@@ -1,6 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
 
+#define TERMINAL "alacritty"
+
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
@@ -44,9 +46,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class        instance    title          tags mask     isfloating   monitor */
+	{ "Gimp",       NULL,       NULL,          0,            1,           -1 },
+	{ "Firefox",    NULL,       NULL,          1 << 8,       0,           -1 },
+	{ "Alacritty",  NULL,       "pulsemixer",  0,            1,           -1 },
+	{ "Alacritty",  NULL,       "bluetui",     0,            1,           -1 },
+	{ "Alacritty",  NULL,       "nmtui",       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -77,7 +82,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *firefox[]  = { "firefox" };
 
 static const Key keys[] = {
@@ -85,7 +90,6 @@ static const Key keys[] = {
    { MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,			              XK_s,		 spawn,          {.v = termcmd } },
 	{ MODKEY,			              XK_a,		 spawn,          {.v = firefox } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
 
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -109,6 +113,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+
+	{ MODKEY,                       XK_p,      spawn,          SHCMD(TERMINAL " -t pulsemixer -e pulsemixer") },
+	{ MODKEY,                       XK_b,      spawn,          SHCMD(TERMINAL " -t bluetui -e bluetui") },
+	{ MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -t nmtui -e nmtui") },
 
    { 0,                            XF86XK_AudioLowerVolume,   spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
    { 0,                            XF86XK_AudioRaiseVolume,   spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
