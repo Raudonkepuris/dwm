@@ -38,8 +38,6 @@ static const Rule rules[] = {
 	 */
 	/* class           instance    title       tags mask     iscentered   isfloating   monitor */
 	{ "Gimp",          NULL,       NULL,       0,            0,           1,           -1 },
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -74,19 +72,47 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "alacritty", 
-										"-o", "window.dimensions.columns=120",
-										"-o", "window.dimensions.lines=34", 
-										"-t", scratchpadname, NULL };
+
+static const char *scratchpadnames[] = {
+    "scratchpad",
+    "bluetui scratchpad",
+	"ranger scratchpad",
+	"impala scratchpad"
+};
+
+static const char *scratchpadcmds[][10] = {
+    { "alacritty", 
+		"-o", "window.dimensions.columns=120",
+		"-o", "window.dimensions.lines=34", 
+		"-t", "scratchpad", NULL },
+    { "alacritty",
+		"-o", "window.dimensions.columns=120",
+		"-o", "window.dimensions.lines=34", 
+		"-t", "bluetui scratchpad",
+		"-e", "bluetui", NULL },
+	{ "alacritty",
+		"-o", "window.dimensions.columns=120",
+		"-o", "window.dimensions.lines=34", 
+		"-t", "ranger scratchpad",
+		"-e", "ranger", NULL },
+	{ "alacritty",
+	"-o", "window.dimensions.columns=120",
+		"-o", "window.dimensions.lines=34", 
+		"-t", "impala scratchpad",
+		"-e", "impala", NULL },
+	};
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
-	{ MODKEY|ShiftMask,             XK_y,      togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.ui = 0 } },
+	{ MODKEY,                       XK_b,      togglescratch,  {.ui = 1 } },
+	{ MODKEY,                       XK_r,      togglescratch,  {.ui = 2 } },
+	{ MODKEY,                       XK_w,      togglescratch,  {.ui = 3 } },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
