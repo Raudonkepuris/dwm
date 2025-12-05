@@ -13,6 +13,7 @@ static int vertpad            = 10;       /* vertical padding of bar */
 static int sidepad            = 10;       /* horizontal padding of bar */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
+static int barheight          = 6;        /* 2 is the default spacing around the bar's font */
 static char font[]            = "monospace:size=10";
 static char dmenufont[]       = "monospace:size=10";
 static const char *fonts[]          = { font };
@@ -133,6 +134,7 @@ ResourcePref resources[] = {
 		{ "mfact",      	 	     FLOAT,   &mfact },
 		{ "lockfullscreen",          INTEGER, &lockfullscreen },
 		{ "refreshrate",             INTEGER, &refreshrate },
+		{ "barheight",               INTEGER, &barheight },
 };
 
 static const Key keys[] = {
