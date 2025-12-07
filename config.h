@@ -1,3 +1,5 @@
+#include <X11/XF86keysym.h>
+
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -14,9 +16,9 @@ static int sidepad            = 10;       /* horizontal padding of bar */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static int barheight          = 6;        /* 2 is the default spacing around the bar's font */
-static char font[]            = "monospace:size=10";
-static char dmenufont[]       = "monospace:size=10";
-static const char *fonts[]          = { font };
+static char font[]            = "monospace:size=11";
+static char dmenufont[]            = "monospace:size=11";
+static const char *fonts[]          = { font, "NotoColorEmoji:pixelsize=11:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -80,7 +82,8 @@ static const char *scratchpadnames[] = {
     "scratchpad",
     "bluetui scratchpad",
 	"ranger scratchpad",
-	"impala scratchpad"
+	"impala scratchpad",
+	"mixer scratchpad",
 };
 
 static const char *scratchpadcmds[][10] = {
@@ -99,10 +102,15 @@ static const char *scratchpadcmds[][10] = {
 		"-t", "ranger scratchpad",
 		"-e", "ranger", NULL },
 	{ "alacritty",
-	"-o", "window.dimensions.columns=120",
+	    "-o", "window.dimensions.columns=120",
 		"-o", "window.dimensions.lines=34", 
 		"-t", "impala scratchpad",
 		"-e", "impala", NULL },
+	{ "alacritty",
+	    "-o", "window.dimensions.columns=120",
+		"-o", "window.dimensions.lines=34", 
+		"-t", "mixer scratchpad",
+		"-e", "ncpamixer", NULL },
 	};
 
 /*
@@ -146,6 +154,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_r,      togglescratch,  {.ui = 2 } },
 	{ MODKEY,                       XK_w,      togglescratch,  {.ui = 3 } },
+	{ MODKEY,                       XK_v,      togglescratch,  {.ui = 4 } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -165,6 +174,15 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+
+	{ 0,                            XF86XK_AudioMute,         spawn, SHCMD("volume 0") },
+	{ 0,                            XF86XK_AudioLowerVolume,  spawn, SHCMD("volume 1 5") },
+	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, SHCMD("volume 2 5") },
+	{ ShiftMask,                    XF86XK_AudioLowerVolume,  spawn, SHCMD("volume 1 2") },
+	{ ShiftMask,                    XF86XK_AudioRaiseVolume,  spawn, SHCMD("volume 2 2") },
+	{ 0,                            XF86XK_MonBrightnessDown, spawn, SHCMD("brightness 1") },
+	{ 0,                            XF86XK_MonBrightnessUp,   spawn, SHCMD("brightness 2") },
+
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
