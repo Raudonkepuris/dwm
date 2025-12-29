@@ -16,8 +16,8 @@ static int sidepad            = 10;       /* horizontal padding of bar */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static int barheight          = 6;        /* 2 is the default spacing around the bar's font */
-static char font[]            = "monospace:size=11";
-static char dmenufont[]            = "monospace:size=11";
+static char font[]            = "Mononoki Nerd Font:size=11";
+static char dmenufont[]            = "Mononoki Nerd Font:size=11";
 static const char *fonts[]          = { font, "NotoColorEmoji:pixelsize=11:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -82,7 +82,7 @@ static const char *scratchpadnames[] = {
     "scratchpad",
     "bluetui scratchpad",
 	"ranger scratchpad",
-	"impala scratchpad",
+	"nmtui scratchpad",
 	"mixer scratchpad",
 };
 
@@ -104,8 +104,8 @@ static const char *scratchpadcmds[][10] = {
 	{ "alacritty",
 	    "-o", "window.dimensions.columns=120",
 		"-o", "window.dimensions.lines=34", 
-		"-t", "impala scratchpad",
-		"-e", "impala", NULL },
+		"-t", "nmtui scratchpad",
+		"-e", "nmtui", NULL },
 	{ "alacritty",
 	    "-o", "window.dimensions.columns=120",
 		"-o", "window.dimensions.lines=34", 
