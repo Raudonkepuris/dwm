@@ -527,8 +527,8 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext) - getsystraywidth()) {
-			x = selmon->ww - getsystraywidth();
+		else if (ev->x > selmon->ww - statusw - getsystraywidth()) {
+			x = selmon->ww - statusw;
 			click = ClkStatusText;
 			char *text, *s, ch;
 			statussig = 0;
@@ -553,8 +553,7 @@ buttonpress(XEvent *e)
 					s--;
 				}
 			}
-		}
-		else
+		} else
 			click = ClkWinTitle;
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -595,6 +594,7 @@ cleanup(void)
 	XUngrabKey(dpy, AnyKey, AnyModifier, root);
 	while (mons)
 		cleanupmon(mons);
+
 	if (showsystray) {
 		XUnmapWindow(dpy, systray->win);
 		XDestroyWindow(dpy, systray->win);
