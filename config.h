@@ -75,6 +75,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
+static const char *freecadcmd[]  = { "freecad", NULL };
+static const char *codecmd[]  = { "code", "-n", NULL };
 
 static const char *scratchpadnames[] = {
     "scratchpad",
@@ -148,6 +150,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = freecadcmd } },
+	{ MODKEY,                       XK_c,      spawn,          {.v = codecmd } },
 	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.ui = 0 } },
 	{ MODKEY,                       XK_b,      togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_r,      togglescratch,  {.ui = 2 } },
