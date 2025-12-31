@@ -37,9 +37,13 @@ install: all
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	mkdir -p ${DESTDIR}${PREFIX}/share/dwm
+	cp -f keys.txt ${DESTDIR}${PREFIX}/share/dwm/keys.txt
+	chmod 644 ${DESTDIR}${PREFIX}/share/dwm/keys.txt
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
-		${DESTDIR}${MANPREFIX}/man1/dwm.1
+		${DESTDIR}${MANPREFIX}/man1/dwm.1\
+		${DESTDIR}${PREFIX}/share/dwm/keys.txt
 
 .PHONY: all clean dist install uninstall

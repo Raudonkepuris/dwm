@@ -1,0 +1,10 @@
+`WIN + m` - opens this window
+`WIN + q` - closes this window
+
+# Main binds
+- `WIN + d` - app launcher
+- `WIN + a` - browser
+- `WIN + b` - bluetooth
+- `WIN + w` - wifi
+- `WIN + v` - sound
+- `WIN + q` - close window

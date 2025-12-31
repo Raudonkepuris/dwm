@@ -70,6 +70,8 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+#define DWM_KEYS_FILE DWM_DATADIR "/keys.txt"
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
@@ -77,6 +79,8 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *freecadcmd[]  = { "freecad", NULL };
 static const char *codecmd[]  = { "code", "-n", NULL };
+static const char *crealitycmd[]  = { "CrealityPrint-V7.0.0.4127-x86_64-Release.AppImage", NULL };
+static const char *prusacmd[]  = { "prusa-slicer", NULL };
 
 static const char *scratchpadnames[] = {
     "scratchpad",
@@ -84,9 +88,11 @@ static const char *scratchpadnames[] = {
 	"ranger scratchpad",
 	"nmtui scratchpad",
 	"mixer scratchpad",
+	"htop scratchpad",
+	"help scratchpad",
 };
 
-static const char *scratchpadcmds[][10] = {
+static const char *scratchpadcmds[][16] = {
     { "alacritty", 
 		"-o", "window.dimensions.columns=120",
 		"-o", "window.dimensions.lines=34", 
@@ -111,7 +117,20 @@ static const char *scratchpadcmds[][10] = {
 		"-o", "window.dimensions.lines=34", 
 		"-t", "mixer scratchpad",
 		"-e", "ncpamixer", NULL },
-	};
+	{ "alacritty",
+	    "-o", "window.dimensions.columns=190",
+		"-o", "window.dimensions.lines=55", 
+		"-t", "htop scratchpad",
+		"-e", "htop", NULL },
+	{ "alacritty",
+		"-o", "window.dimensions.columns=60",
+		"-o", "window.dimensions.lines=16", 
+		"-t", "help scratchpad",
+		"-e", "bat", 
+		"--paging=always",
+		"-l=md",
+		DWM_KEYS_FILE, NULL },
+};
 
 /*
  * Xresources preferences to load at startup
@@ -147,16 +166,25 @@ ResourcePref resources[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	/*                              GUI                                 */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = freecadcmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = codecmd } },
+	{ MODKEY,                       XK_t,      spawn,          {.v = prusacmd } },
+	{ MODKEY|ShiftMask,	            XK_t,      spawn,          {.v = crealitycmd } },
+
+	/*                              scratchpads                         */
 	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.ui = 0 } },
 	{ MODKEY,                       XK_b,      togglescratch,  {.ui = 1 } },
 	{ MODKEY,                       XK_r,      togglescratch,  {.ui = 2 } },
 	{ MODKEY,                       XK_w,      togglescratch,  {.ui = 3 } },
 	{ MODKEY,                       XK_v,      togglescratch,  {.ui = 4 } },
+	{ MODKEY|ShiftMask,				XK_f,      togglescratch,  {.ui = 5 } },
+	{ MODKEY,				        XK_m,      togglescratch,  {.ui = 6 } },
+
+	/*                              workspace                         */
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -175,7 +203,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
+	/*                              utils                             */
 	{ 0,                            XF86XK_AudioMute,         spawn, SHCMD("volume 0") },
 	{ 0,                            XF86XK_AudioLowerVolume,  spawn, SHCMD("volume 1 5") },
 	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, SHCMD("volume 2 5") },
@@ -184,6 +214,7 @@ static const Key keys[] = {
 	{ 0,                            XF86XK_MonBrightnessDown, spawn, SHCMD("brightness 1") },
 	{ 0,                            XF86XK_MonBrightnessUp,   spawn, SHCMD("brightness 2") },
 
+	/*                              tags                              */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -193,7 +224,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */

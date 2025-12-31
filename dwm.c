@@ -348,6 +348,9 @@ static const unsigned int scratchtags[] = {
     1 << (LENGTH(tags) + 3),
     1 << (LENGTH(tags) + 4),
     1 << (LENGTH(tags) + 5),
+    1 << (LENGTH(tags) + 6),
+    1 << (LENGTH(tags) + 7),
+    1 << (LENGTH(tags) + 8),
 };
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
