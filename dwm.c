@@ -1117,8 +1117,9 @@ focusstack(const Arg *arg)
 {
 	Client *c = NULL, *i;
 
-	if (!selmon->sel || (selmon->sel->isfullscreen && lockfullscreen))
+	if (!selmon->sel)
 		return;
+		
 	if (arg->i > 0) {
 		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
 		if (!c)
@@ -1132,6 +1133,12 @@ focusstack(const Arg *arg)
 				if (ISVISIBLE(i))
 					c = i;
 	}
+
+	if(selmon->sel->isfullscreen) {
+		setfullscreen(selmon->sel, 0);
+		setfullscreen(c, 1);
+	}
+
 	if (c) {
 		focus(c);
 		restack(selmon);
