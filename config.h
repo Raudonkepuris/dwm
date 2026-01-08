@@ -79,8 +79,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *freecadcmd[]  = { "freecad", NULL };
 static const char *codecmd[]  = { "code", "-n", NULL };
-static const char *crealitycmd[]  = { "CrealityPrint-V7.0.0.4127-x86_64-Release.AppImage", NULL };
-static const char *prusacmd[]  = { "prusa-slicer", NULL };
+static const char *orcacmd[]  = { "flatpak", "run", "io.github.softfever.OrcaSlicer", NULL };
 
 static const char *scratchpadnames[] = {
     "scratchpad",
@@ -172,8 +171,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = freecadcmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = codecmd } },
-	{ MODKEY,                       XK_t,      spawn,          {.v = prusacmd } },
-	{ MODKEY|ShiftMask,	            XK_t,      spawn,          {.v = crealitycmd } },
+	{ MODKEY,	                    XK_t,      spawn,          {.v = orcacmd } },
 
 	/*                              scratchpads                         */
 	{ MODKEY|ShiftMask,             XK_s,      togglescratch,  {.ui = 0 } },
